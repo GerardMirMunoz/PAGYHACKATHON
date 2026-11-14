@@ -640,3 +640,57 @@ print("======================================")
 print("Archivo:", SALIDA)
 print("======================================")
 
+
+# ==========================================================
+# 12. MOSTRAR RESULTADOS EN STREAMLIT
+# ==========================================================
+
+st.title("Resultados de la optimización")
+
+# Resumen general
+st.subheader("Resumen general")
+st.dataframe(resumen_general, use_container_width=True)
+
+# Movimientos asignados
+st.subheader("Movimientos asignados")
+
+if not df_asignaciones.empty:
+    st.success(
+        f"Se han asignado {len(df_asignaciones)} cargas"
+    )
+    st.dataframe(
+        df_asignaciones,
+        use_container_width=True
+    )
+else:
+    st.warning("No se han podido asignar movimientos.")
+
+# Movimientos no asignados
+st.subheader("Movimientos pendientes")
+
+if not df_no_asignados.empty:
+    st.warning(
+        f"Hay {len(df_no_asignados)} cargas sin asignar"
+    )
+    st.dataframe(
+        df_no_asignados,
+        use_container_width=True
+    )
+else:
+    st.success("No hay cargas pendientes.")
+
+# Resumen de camiones
+st.subheader("Utilización de camiones")
+st.dataframe(resumen_camiones, use_container_width=True)
+
+# Descargar Excel
+st.subheader("Descargar resultados")
+
+with open(SALIDA, "rb") as archivo_resultado:
+    st.download_button(
+        label="Descargar planificación optimizada",
+        data=archivo_resultado,
+        file_name="OPTIMIZACION_SEMANA.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
