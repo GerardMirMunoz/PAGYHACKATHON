@@ -1,7 +1,8 @@
 
+import streamlit as st
+import pandas as pd
 from pathlib import Path
 import math
-import pandas as pd
 
 # ==========================================================
 # 1. CONFIGURACION
@@ -182,6 +183,7 @@ hojas = pd.read_excel(
 
 st.success("Excel cargado correctamente")
 
+# Comprobar que las hojas necesarias existen
 for nombre in [
     "Granjas", "Destetes",
     "Salidas-transición", "Recrias"
