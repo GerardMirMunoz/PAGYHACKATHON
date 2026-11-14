@@ -163,12 +163,24 @@ def obtener_distancia(granjas, origen, destino):
 # 4. LEER EXCEL
 # ==========================================================
 
-if not ARCHIVO.exists():
-    raise FileNotFoundError(
-        f"No se encuentra el archivo {ARCHIVO}"
-    )
+# Subir Excel desde Streamlit
+archivo_subido = st.file_uploader(
+    "Sube el Excel con los movimientos",
+    type=["xlsx"]
+)
 
-hojas = pd.read_excel(ARCHIVO, sheet_name=None)
+# Comprobar que se ha subido un archivo
+if archivo_subido is None:
+    st.info("Sube un archivo Excel para comenzar.")
+    st.stop()
+
+# Leer todas las pestañas del Excel
+hojas = pd.read_excel(
+    archivo_subido,
+    sheet_name=None
+)
+
+st.success("Excel cargado correctamente")
 
 for nombre in [
     "Granjas", "Destetes",
